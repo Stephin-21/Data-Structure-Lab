@@ -58,6 +58,12 @@ void insert_begin(){
   temp=(struct node*)malloc(sizeof(struct node));
   printf("Enter Data to be Entered : \n");
   scanf("%d",&item);
+   if(temp==NULL)
+   printf("no memory space\n");
+   else{
+   temp->data=item;
+   temp->link=head;
+   head=temp;
   
 }
 
@@ -76,11 +82,18 @@ void insert_end(){
  }
  
  void insert_anyloc(){
+   
   int key;
   struct node *temp,*ptr;
+   if(head==NULL){
+     printf("linked list is empty ");
+   }
+   else{
   temp=(struct node*)malloc(sizeof struct node);
   printf("Enter Data After which new data should be Entered : \n");
   scanf("%d",&key);
+  printf("Enter the data to be added\n");
+  scanf("%d",&item);
   ptr=head;
   while(ptr->data==key && ptr->link!=NULL){
    ptr=ptr->link;
@@ -91,28 +104,37 @@ void insert_end(){
    else{
    temp->link=ptr->link;
    ptr->link=temp;
+   temp->data=item;
+   }
    }
   }
   
 void delete_begin(){
  struct node *ptr;
  if(head==NULL){
+   printf("No elements are present ");
   break;
  }
  else {
   ptr=head;
   head=ptr->link;
+   printf("The Deleted element is \n",ptr->data);
   free(ptr);
 }
 }
 
 void delete_end(){
  struct node *ptr,*temp;
- if(head->link==NULL){
+  if(head==NULL){
+   printf("No elements In linked list");
+  }
+ else if(head->link==NULL){
    ptr=head;
    head=NULL;
+   printf("The Deleted element is : /n",ptr->data);
    free(ptr);
  }
+  else{
  ptr=head;
  temp=head->link;
  while(temp->link!=NULL){
@@ -120,8 +142,10 @@ void delete_end(){
    temp=temp->link;
    }
   ptr->link=NULL;
+    printf("The deleted element is : ",temp->data);
   free(temp)
   }
+}
   
 void delete_any_loc(){
  int key;
@@ -129,9 +153,11 @@ void delete_any_loc(){
  scanf("%d",&key);
  struct node *ptr,*temp;
  ptr=head;
- if(head=NULL){
+ if(head==NULL){
+   printf("No Elements\n");
   break;
  }
+  else{
  temp=ptr;
  while(ptr->link!=NULL){
   if(ptr->data==key){
@@ -142,6 +168,7 @@ void delete_any_loc(){
    ptr->ptr->link;
    }
    } 
+}
 
 void display(){
 
