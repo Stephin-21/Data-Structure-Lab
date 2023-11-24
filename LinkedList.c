@@ -1,179 +1,212 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 struct node{
-  int data;
-  struct node* link;
-  };
-  int item;
-void insert_begin();
-void insert_end();
-void insert_anyloc();
-void delete_begin();
-void delete_end();
-void delete_any_loc();
+int data;
+struct node *link;
+}*head;
+void insertion_at_front();
+void Insertion_at_end();
+void insertion_at_any_position();
+void deletion_at_front();
+void deletion_at_end();
+void deletion_at_any_position();
 void display();
+int main()
+{
+int ch;
 
-void main(){
+  printf("enter the choice  1)insert at front  2)insert at end  3)insert at any position  4)delete at front  5)delete at end  6)delete at any position   7)display  8)exit\n");
+do{
 
-int choice;
-printf("Enter Choice 1) Insert At Beggining 2) Insert At End 3) Insert At Any location 4) Delete at Beggining 5) Delete at end 6) Delete at any location 7) Display 8)Exit  \n");
-scanf("%d",&choice);
-while(choice!=8){
-switch(choice){
- case 1 :{
-  insert_begin();
-  break;
-  
- }
- case 2 :{
-  insert_end();
-  break;
-}
- case 3 :{
-  insert_anyloc();
-  break;
-}
- case 4 :{
-  delete_begin();
-  break;
-}
- case 5 :{
-  delete_end();
-  break;
-}
- case 6 :{
-  delete_any_loc();
-  break;
-}
-case 7 :{
- display();
-}
-
-}
-}
-}
-
-void insert_begin(){
-  struct node *temp;
-  temp=(struct node*)malloc(sizeof(struct node));
-  printf("Enter Data to be Entered : \n");
-  scanf("%d",&item);
+  scanf("%d",&ch);
+  switch(ch){
+    case 1:{
+    insertion_at_front();
+    break;
+    }
+    case 2:{
+    Insertion_at_end();
+    break;
+    }
+    case 3:{
+    insertion_at_any_position();
+    break;
+    }
+    case 4:{
+    deletion_at_front();
+    break;
+    }
+    case 5:{
+    deletion_at_end();
+    break;
+    }
+    case 6:{
+    deletion_at_any_position();
+    break;
+    }
+    case 7:{
+    display();
+    break;
+    }
+    case 8:
+    break;
+    default:
+    printf("invalid choice\n");
+    
+    }
+     printf("enter the choice : \n");
+    }
+    while(ch!=8);
+    }
+void insertion_at_front(){
+   int item;
+   struct node *temp;
+   temp=(struct node*)malloc(sizeof(struct node));
+   printf("Enter Data : \n");
+   scanf("%d",&item);
    if(temp==NULL)
-   printf("no memory space\n");
+   printf("No memory space\n");
    else{
    temp->data=item;
    temp->link=head;
    head=temp;
-  
-}
-
-void insert_end(){
- struct node *temp,*ptr;
- temp=(struct node*)malloc(sizeof struct node);
- ptr=head;
- while(ptr->link!=NULL){
-  ptr=ptr->link;
- }
- printf("Enter Data to be Entered : \n");
-  scanf("%d",&item);
- ptr->link=temp;
- temp->data=item;
- temp->link=NULL;
- }
- 
- void insert_anyloc(){
-   
-  int key;
-  struct node *temp,*ptr;
+   }
+   }
+void Insertion_at_end(){
+   int item;
+   struct node *temp,*ptr;
    if(head==NULL){
-     printf("linked list is empty ");
+      insertion_at_front();
    }
    else{
-  temp=(struct node*)malloc(sizeof struct node);
-  printf("Enter Data After which new data should be Entered : \n");
-  scanf("%d",&key);
-  printf("Enter the data to be added\n");
-  scanf("%d",&item);
-  ptr=head;
-  while(ptr->data==key && ptr->link!=NULL){
+   printf("Enter data : \n");
+   scanf("%d",&item);
+   temp=(struct node*)malloc(sizeof(struct node));
+   ptr=head;
+   while(ptr->link!=NULL){
+   ptr=ptr->link;
+   }
+   ptr->link=temp;
+   temp->data=item;
+   temp->link=NULL;
+   }
+}
+void insertion_at_any_position(){
+   int item,key;
+   struct node *temp,*ptr;
+   if(head==NULL){
+      insertion_at_front();
+   }
+   else{
+   printf("Enter Data\n");
+   scanf("%d",&item);
+   temp=(struct node*)malloc(sizeof(struct node));
+   printf("enter the Element after which value to added\n");
+   scanf("%d",&key);
+   ptr=head;
+   while(ptr->data!=key&&ptr->link!=NULL){
    ptr=ptr->link;
    }
    if(ptr->link==NULL){
-   printf("Search Fails \n");
+      temp->data=item;
+      temp->link=NULL;
+      ptr->link=temp;
+  }
+   else{
+   temp->data=item;
+   temp->link=ptr->link;
+   ptr->link=temp;
+   }
+   }
+}
+void deletion_at_front(){
+   struct node *ptr;
+   if(head==NULL)
+   printf("no elements\n");
+   else{
+   ptr=head;
+   head=ptr->link;
+   printf("the Element %d is deleted\n",ptr->data);
+   free(ptr);
+   }
+   }
+void deletion_at_end(){
+    struct node *temp,*ptr;
+    if(head==NULL){
+      printf("no elements\n");
+    }
+    else if(head->link==NULL){
+    ptr=head;
+    head=NULL;
+    printf("the Element %d is deleted\n",ptr->data);
+    free(ptr);
+    }
+    else {
+    ptr=head;
+    temp=head->link;
+     while(temp->link!=NULL){
+       ptr=temp;
+       temp=temp->link;
+   }
+   ptr->link=NULL;
+    printf("the Element %d is deleted\n",temp->data);
+    free(temp);
+   }
+}
+void  deletion_at_any_position(){
+   struct node *ptr,*temp;
+   int key;
+   if(head==NULL){
+   printf("no elements\n");
+   }
+   else if(head->link==NULL){
+      deletion_at_front();
+      head=NULL;
+   }
+  
+   else{
+    printf("enter the data to delete\n");
+   scanf("%d",&key);
+   temp=head;
+   ptr=temp->link;
+   if(temp->data==key){
+       printf("the data %d is deleted\n",temp->data);
+       free(temp);
+       head=ptr;
+   }
+   else{
+   while(ptr->data!=key&&ptr->link!=NULL){
+   temp=ptr;
+   ptr=ptr->link;
+   }
+   if(ptr->data!=key&&ptr->link!=NULL){
+      printf("search fails\n");
    }
    else{
    temp->link=ptr->link;
-   ptr->link=temp;
-   temp->data=item;
-   }
-   }
-  }
-  
-void delete_begin(){
- struct node *ptr;
- if(head==NULL){
-   printf("No elements are present ");
-  break;
- }
- else {
-  ptr=head;
-  head=ptr->link;
-   printf("The Deleted element is \n",ptr->data);
-  free(ptr);
-}
-}
-
-void delete_end(){
- struct node *ptr,*temp;
-  if(head==NULL){
-   printf("No elements In linked list");
-  }
- else if(head->link==NULL){
-   ptr=head;
-   head=NULL;
-   printf("The Deleted element is : /n",ptr->data);
-   free(ptr);
- }
-  else{
- ptr=head;
- temp=head->link;
- while(temp->link!=NULL){
-   ptr=temp;
-   temp=temp->link;
-   }
-  ptr->link=NULL;
-    printf("The deleted element is : ",temp->data);
-  free(temp)
-  }
-}
-  
-void delete_any_loc(){
- int key;
- printf("Enter Key to be deleted  \n");
- scanf("%d",&key);
- struct node *ptr,*temp;
- ptr=head;
- if(head==NULL){
-   printf("No Elements\n");
-  break;
- }
-  else{
- temp=ptr;
- while(ptr->link!=NULL){
-  if(ptr->data==key){
-   temp->link=ptr->link;
+   printf("the data %d is deleted\n",ptr->data);
    free(ptr);
    }
-   temp=ptr;
-   ptr->ptr->link;
    }
-   } 
+}
 }
 
 void display(){
-
+   struct node *ptr;
+   ptr=head;
+   if(head==NULL){
+      printf("no elements\n");
+   }
+   else{
+   printf("linked list:");
+   while(ptr!=NULL)
+   {
+   printf("%d  ",ptr->data);
+   ptr=ptr->link;
+   }
+   printf("\n");
+   }
 }
-  
   
   
   
